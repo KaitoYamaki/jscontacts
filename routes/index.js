@@ -1,11 +1,12 @@
-var express = require('express');
-const { route } = require('express/lib/application');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const models = require('../models');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', async function(req, res, next) {
   const now = new Date();
-  res.render('index', { title: 'Hello World', now: now });
+  const contacts = await models.Contact.findAll();
+  res.render('index', { title: '連絡帳', now: now, contacts: contacts });
 });
 
 router.get('/about', function(req, res, next) {
@@ -16,8 +17,10 @@ router.get('/contact_form', function(req, res, next) {
   res.render('contact_form', { title: 'コンタクトフォーム'});
 });
 
-router.post('/contacts', function(req, res, next) {
-  console.log('posted', req.params);
+router.post('/contacts', async function(req, res, next) {
+  const num = (new Date()).getTime();
+  const contact = models.Contact.create({ name: req.body.name, email: req.body.email}); // --- [4]
+  // await contact.save();
   res.redirect('/');
 });
 
