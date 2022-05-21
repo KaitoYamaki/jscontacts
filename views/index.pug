@@ -4,6 +4,9 @@ extends layout
 block content
   h1= title
 
+  -if(flashMessage)
+    div.flash=flashMessage 
+
   div 
     a(href="/contact_form") 連絡先の追加
 
