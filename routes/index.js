@@ -23,17 +23,17 @@ router.get('/contact_form', function(req, res, next) {
 
 
 router.post('/contacts', async function(req, res, next) {
+  const fields = ['name', 'email'];
   try {
     console.log('posted', req.body);
     if(req.body.id) {
       const contact = await models.Contact.findByPk(req.body.id); //---[1]
-      contact.name = req.body.name; //--- [2〜]
-      contact.email = req.body.email; //--- [〜2]
-      await contact.save(); //--- [3]
+      contact.set(req.body);
+      await contact.save({fields});
       req.session.flashMessage = `「${contact.name}」さんを更新しました`; //--- [4]
     } else {
       const contact = models.Contact.build({ name: req.body.name, email: req.body.email });
-      await contact.save();
+      await contact.save({fields});
       req.session.flashMessage = `新しい連絡先として「${contact.name}」さんを保存しました`;
     }
     res.redirect('/');
