@@ -3,20 +3,20 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Contact extends Model {
+  class Category extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.Category = this.belongsTo(model.Category, {
-        foreignKey: 'categoryId',
-        as: 'category'
+      this.Contact = thisu.hasMany(modeles.Contact, {
+        foreingKey: 'categoryId',
+        as: 'cotnacts'
       });
     }
   }
-  Contact.init({
+  Category.init({
     name: {
       type: DataTypes.STRING,
       validate: {
@@ -24,17 +24,9 @@ module.exports = (sequelize, DataTypes) => {
         len: [0, 20],
       }
     },
-
-    email: {
-      type: DataTypes.STRING,
-      validate: {
-        notEmpty: true,
-        len: [0, 100],
-      }
-    }
   }, {
     sequelize,
-    modelName: 'Contact',
+    modelName: 'Category',
   });
-  return Contact;
+  return Category;
 };
