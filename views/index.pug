@@ -4,6 +4,9 @@ extends layout
 block content
   h1= title
 
+  - if(flashMessage)
+    div.flash=flashMessage
+
   div 
     a(href="/contact_form") 連絡先の追加
 
@@ -21,3 +24,4 @@ block content
   fotter
     a(href="/about") このサービスについて  
     p アクセス時刻 #{now}
+    p トップページのアクセス回数 #{view_counter}
