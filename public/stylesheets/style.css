@@ -7,6 +7,22 @@ a {
   color: #00B7FF;
 }
 
+form .actions {
+  margin-top: .5lem;
+}
+
+form .field {
+  margin-bottom: .5em;
+}
+
+.errors {
+  color: darkred;
+  background-color: pink;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+
 table, th, td {
   border: solid 1px black;
 }

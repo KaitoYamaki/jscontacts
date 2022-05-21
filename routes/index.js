@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const models = require('../models');
+const { ValidationError } = require('sequelize'); 
 
 /* GET home page. */
 router.get('/', async function(req, res, next) {
@@ -14,14 +15,22 @@ router.get('/about', function(req, res, next) {
 });
 
 router.get('/contact_form', function(req, res, next) {
-  res.render('contact_form', { title: 'コンタクトフォーム'});
+  res.render('contact_form', { title: 'コンタクトフォーム', contact: {} });
 });
 
 router.post('/contacts', async function(req, res, next) {
-  const num = (new Date()).getTime();
-  const contact = models.Contact.create({ name: req.body.name, email: req.body.email}); // --- [4]
-  // await contact.save();
-  res.redirect('/');
+  try {
+    console.log('posted', req.body);
+    const contact = models.Contact.build({ name: req.body.name, email: req.body.email });
+    await contact.save();
+    res.redirect('/');
+  } catch (err) {
+    if(err instanceof ValidationError) {
+      res.render(`contact_form`, { title: '連絡先フォーム', contact: req.body, err: err });
+    } else {
+      throw err; // ここでの対応を諦めて処理系に任せる
+    }
+  }
 });
 
 module.exports = router;
