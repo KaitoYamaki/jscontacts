@@ -10,6 +10,8 @@ block content
 
   div 
     a(href="/contact_form") 連絡先の追加
+  p
+    a(href="/categories/new") カテゴリの追加 
   
   div 
     include _contact_table
@@ -18,7 +20,7 @@ block content
     h2 カテゴリ
     each category in categories 
       a(href= `/categories/${category.id}`)= category.name        
-      | &nbsq;
+      | 
 
   fotter
     a(href="/about") このサービスについて  
